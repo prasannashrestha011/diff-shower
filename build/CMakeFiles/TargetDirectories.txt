@@ -1,0 +1,5 @@
+/mnt/sda1/Projects/diff/build/CMakeFiles/main.dir
+/mnt/sda1/Projects/diff/build/CMakeFiles/lcp.dir
+/mnt/sda1/Projects/diff/build/CMakeFiles/prt.dir
+/mnt/sda1/Projects/diff/build/CMakeFiles/edit_cache.dir
+/mnt/sda1/Projects/diff/build/CMakeFiles/rebuild_cache.dir

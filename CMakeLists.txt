@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+project(Diff)
+add_executable(main main.c)
+add_executable(lcp lcp.c)
+add_executable(prt prt.c)
