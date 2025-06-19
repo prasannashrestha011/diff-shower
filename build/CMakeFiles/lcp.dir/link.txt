@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/lcp.dir/lcp.c.o -o lcp 

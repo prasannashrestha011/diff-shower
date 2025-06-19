@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/prt.dir/prt.c.o -o prt 
