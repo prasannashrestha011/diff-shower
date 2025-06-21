@@ -69,6 +69,7 @@ void print_line_dff(const string &a, const string &b) {
 
 int main(int argc, char *argv[]) {
   string a, b; // strings
+  string abc, dbc;
   if (argc < 3) {
     cerr << "Usage : " << argv[0] << "<file> <file>" << endl;
     return 1;
