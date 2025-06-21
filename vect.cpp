@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <complex>
+#include <cstddef>
 #include <cstdio>
 #include <fstream>
 #include <iostream>
@@ -22,7 +23,35 @@ vector<vector<int>> build_lcs_table(const string &a, const string &b) {
   }
   return dp;
 }
+void show_line_diff(const vector<string> &old_line,
+                    const vector<string> new_line) {
+  size_t i = 1, j = 1;
+  while (i < old_line.size() || j < new_line.size()) {
+    if (i < old_line.size() && j < new_line.size()) {
+      if (old_line.size() == new_line.size()) {
+        cout << " " << old_line[i] << endl;
+        i++;
+        j++;
+      }
+      {
+        // Mismatch — treat as remove/add (simplest fallback)
+        cout << RED << "- " << old_line[i] << RESET << endl;
+        cout << GREEN << "+ " << new_line[j] << RESET << endl;
+        ++i;
+        ++j;
+      }
 
+    } else {
+      if (i < old_line.size()) {
+        cout << RED << "- " << old_line[i] << RESET << endl;
+        i++;
+      } else if (j < new_line.size()) {
+        cout << GREEN << "+ " << new_line[j] << RESET << endl;
+        j++;
+      }
+    }
+  }
+}
 void print_line_dff(const string &a, const string &b) {
   vector<vector<int>> dp = build_lcs_table(a, b);
   int i = a.size(), j = b.size();
@@ -68,8 +97,6 @@ void print_line_dff(const string &a, const string &b) {
 }
 
 int main(int argc, char *argv[]) {
-  string a, b; // strings
-  string ac, db;
   if (argc < 3) {
     cerr << "Usage : " << argv[0] << "<file> <file>" << endl;
     return 1;
@@ -79,15 +106,12 @@ int main(int argc, char *argv[]) {
     cerr << "Corruped file" << endl;
     return 1;
   }
-  string line1, line2;
-  int line_no = 1;
-  while (getline(file1, line1) && getline(file2, line2)) {
-    cout << "Line no: " << line_no << endl;
-    print_line_dff(line1, line2);
-    getchar();
-    line_no++;
-  }
-  getline(cin, b);
-  print_line_dff(a, b);
+  vector<string> line1, line2;
+  string line;
+  while (getline(file1, line))
+    line1.push_back(line);
+  while (getline(file2, line))
+    line2.push_back(line);
+  show_line_diff(line1, line2);
   return 0;
 }
