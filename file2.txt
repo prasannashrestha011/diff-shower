@@ -1,0 +1,5 @@
+Git is a powerful distributed version control system.
+It helps programmers track and manage changes in source code.
+Git allows teams of developers to collaborate efficiently.
+The system is robust and optimized for large-scale projects.
+Mastering Git can significantly improve your workflow.

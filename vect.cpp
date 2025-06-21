@@ -1,4 +1,7 @@
 #include <algorithm>
+#include <complex>
+#include <cstdio>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -65,10 +68,24 @@ void print_line_dff(const string &a, const string &b) {
 }
 
 int main(int argc, char *argv[]) {
-  string a, b;
-  cout << "Enter your old string ";
-  getline(cin, a);
-  cout << "Enter your new string ";
+  string a, b; // strings
+  if (argc < 3) {
+    cerr << "Usage : " << argv[0] << "<file> <file>" << endl;
+    return 1;
+  }
+  ifstream file1(argv[1]), file2(argv[2]);
+  if (!file1.is_open() || !file2.is_open()) {
+    cerr << "Corruped file" << endl;
+    return 1;
+  }
+  string line1, line2;
+  int line_no = 1;
+  while (getline(file1, line1) && getline(file2, line2)) {
+    cout << "Line no: " << line_no << endl;
+    print_line_dff(line1, line2);
+    getchar();
+    line_no++;
+  }
   getline(cin, b);
   print_line_dff(a, b);
   return 0;

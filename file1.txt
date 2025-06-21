@@ -1,0 +1,5 @@
+Git is a distributed version control system.
+It helps developers track changes in source code.
+Git allows multiple developers to collaborate easily.
+The system is efficient and fast for handling large projects.
+Learning Git can improve your development workflow.
