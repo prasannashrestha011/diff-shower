@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 using namespace std;
 #define GREEN "\x1b[1;32m" // additions
 #define RED "\x1b[1;31m"   // removals (changed from yellow to red)
@@ -18,32 +19,57 @@ vector<vector<int>> build_lcs_table(const string &a, const string &b) {
   }
   return dp;
 }
+
 void print_line_dff(const string &a, const string &b) {
   vector<vector<int>> dp = build_lcs_table(a, b);
   int i = a.size(), j = b.size();
   vector<pair<char, string>> output;
-  while (i > 0 && j > 0) {
-    if (j > 0 && (i == 0 || a[i - 1] == b[j - 1])) {
-      output.push_back({a[i - 1], BLUE});
+
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && a[i - 1] == b[j - 1]) {
+      output.push_back({a[i - 1], BLUE}); // Unchanged
       i--;
       j--;
-    } else if (j > 0 && dp[i - 1][j] >= dp[i][j - 1]) {
-      output.push_back({b[j - 1], GREEN});
+    } else if (j > 0 && (i == 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+      output.push_back({b[j - 1], GREEN}); // Added in b
       j--;
     } else if (i > 0) {
-      output.push_back({a[i - 1], RED});
+      output.push_back({a[i - 1], RED}); // Removed from a
       i--;
     }
   }
+  cout << "Previous buffer " << a << endl;
+  cout << "Current buffer " << b << endl;
+  cout << "Diff ";
+  string added_char, removed_char, unchanged_char;
   for (auto it = output.rbegin(); it != output.rend(); ++it) {
-    cout << it->second << it->first << RESET;
-  }
+    char ch = it->first;              // The actual character
+    const string &color = it->second; // The color code
 
+    if (color == GREEN) {
+      added_char += ch;
+    } else if (color == RED) {
+      removed_char += ch;
+    } else {
+      unchanged_char += ch;
+    }
+  }
+  cout << endl;
+  cout << GREEN << "added characters(+) " << added_char << RESET << endl;
+  cout << RED << "removed characters(-) " << removed_char << RESET << endl;
+  cout << "unchanged characters(#) " << unchanged_char << endl;
+  cout << GREEN << "total(+) " << added_char.size() << endl;
+  cout << RED << "total(-) " << removed_char.size() << RESET << endl;
+  cout << "total(#) " << unchanged_char.size() << endl;
   cout << endl;
 }
+
 int main(int argc, char *argv[]) {
-  string a = "bat";
-  string b = "cat";
+  string a, b;
+  cout << "Enter your old string ";
+  getline(cin, a);
+  cout << "Enter your new string ";
+  getline(cin, b);
   print_line_dff(a, b);
   return 0;
 }
